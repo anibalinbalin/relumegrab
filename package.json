@@ -1,0 +1,19 @@
+{
+  "name": "relume-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for Relume React components",
+  "type": "module",
+  "scripts": {
+    "scrape:discover": "tsx scraper.ts discover",
+    "scrape:discover:test": "tsx scraper.ts discover 2",
+    "scrape:download": "tsx scraper.ts download",
+    "scrape:all": "tsx scraper.ts all",
+    "scrape:all:test": "tsx scraper.ts discover 2 && tsx scraper.ts download"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

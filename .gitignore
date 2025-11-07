@@ -1,0 +1,8 @@
+node_modules/
+dist/
+components/
+*.log
+progress.json
+catalog.json
+catalog-test.json
+.DS_Store
