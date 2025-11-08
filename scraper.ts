@@ -6,6 +6,7 @@
  * Phase 2: Download - Downloads components, code, and images
  */
 
+import 'dotenv/config';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as fs from 'fs/promises';
@@ -42,7 +43,8 @@ const BASE_URL = 'https://www.relume.io';
 const LISTING_URL = `${BASE_URL}/react/components`;
 const DELAY_MS = 2000; // 2 second delay between requests
 
-const CATALOG_FILE = './catalog.json';
+// Support catalog file parameter: node scraper.ts download [catalog-file]
+const CATALOG_FILE = process.argv[3] || './catalog.json';
 const PROGRESS_FILE = './progress.json';
 const COMPONENTS_DIR = './components';
 
@@ -50,7 +52,14 @@ const COMPONENTS_DIR = './components';
 async function browserCommand(command: string): Promise<any> {
   try {
     const { stdout } = await execAsync(command);
-    const result = JSON.parse(stdout);
+
+    // Extract first JSON object from stdout (ignore trailing text)
+    const jsonMatch = stdout.match(/\{[\s\S]*?\}(?=\s*$|\n)/);
+    if (!jsonMatch) {
+      throw new Error(`No JSON found in output: ${stdout.substring(0, 200)}`);
+    }
+
+    const result = JSON.parse(jsonMatch[0]);
 
     if (!result.success) {
       throw new Error(result.error || result.message);

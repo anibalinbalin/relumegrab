@@ -6,3 +6,4 @@ progress.json
 catalog.json
 catalog-test.json
 .DS_Store
+.env
